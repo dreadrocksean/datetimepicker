@@ -664,7 +664,7 @@
 	};
 
 	$.fn.datetimepicker = function (opt) {
-		var KEY0 = 48,
+		var KEY0 = 48, //check
 			KEY9 = 57,
 			_KEY0 = 96,
 			_KEY9 = 105,
@@ -1004,6 +1004,7 @@
 				options.dayOfWeekStartPrev = (options.dayOfWeekStart === 0) ? 6 : options.dayOfWeekStart - 1;
 
 				datetimepicker
+					.data('options', options)
 					.trigger('xchange.xdsoft')
 					.trigger('afterOpen.xdsoft');
 			};
@@ -1614,7 +1615,9 @@
 			current_time_index = 0;
 
 			setPos = function () {
-				var offset = datetimepicker.data('input').offset(), top = offset.top + datetimepicker.data('input')[0].offsetHeight - 1, left = offset.left, position = "absolute";
+				var topMargin = parseInt($('header').css('height'), 10); // custom - assumes a <header> tag that is fixed.
+				var offset = datetimepicker.data('input').offset(), top = offset.top - topMargin + datetimepicker.data('input')[0].offsetHeight - 1, left = offset.left, position = "absolute";
+				// var offset = datetimepicker.data('input').offset(), top = offset.top + datetimepicker.data('input')[0].offsetHeight - 1, left = offset.left, position = "absolute";
 				if (options.fixed) {
 					top -= $(window).scrollTop();
 					left -= $(window).scrollLeft();
